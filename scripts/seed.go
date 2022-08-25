@@ -2,6 +2,7 @@ package scripts
 
 import (
 	"crypto/rand"
+	"fmt"
 
 	"github.com/mr-tron/base58"
 	"github.com/olegfomenko/solana-go"
@@ -21,6 +22,7 @@ func GenSeed(key string) (solana.PublicKey, [32]byte) {
 		}
 
 		key, err := getBridgeAdmin(seed, programId)
+		fmt.Println(key)
 		if err == nil {
 			return key, seed
 		}
@@ -39,18 +41,6 @@ func getSeedFromString(adminSeed string) [32]byte {
 
 	var seed [32]byte
 
-	copy(decoded[:], seed[:32])
+	copy(seed[:], decoded[:])
 	return seed
-}
-
-func getPubkeyFromString(adminSeed string) [64]byte {
-	decoded, err := base58.Decode(adminSeed)
-	if err != nil {
-		panic(err)
-	}
-
-	var key [64]byte
-
-	copy(decoded[:], key[:64])
-	return key
 }

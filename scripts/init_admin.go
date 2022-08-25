@@ -2,7 +2,9 @@ package scripts
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/mr-tron/base58"
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
@@ -17,10 +19,15 @@ func InitBridgeAdmin(adminSeed, program, key string) {
 	seed := getSeedFromString(adminSeed)
 	pubkey := getPubkeyFromString(key)
 
+	fmt.Println(base58.Encode(seed[:]))
+
 	bridgeAdmin, err := getBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println(bridgeAdmin.String())
+	fmt.Println(adminSeed)
 
 	instruction, err := contract.InitializeAdminInstruction(programId, bridgeAdmin, FeePayerKey.PublicKey(), contract.InitializeAdminArgs{
 		Instruction: 0,

@@ -148,11 +148,10 @@ func TransferOwnershipInstruction(programId, bridgeAdmin solana.PublicKey, args 
 func DepositNativeInstruction(programId, bridgeAdmin, deposit, owner solana.PublicKey, args DepositNativeArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionDepositNative
 
-	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 6))
-	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
+	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 5))
+	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(deposit, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
-	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 

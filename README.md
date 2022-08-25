@@ -1,0 +1,14 @@
+
+
+BridgeAdmin: AaJNursrDE51Ybq8pkLUFisiNowpvtSm1t8xe7tYuV1p
+Seed: CwNCxqTAFcqpx2Yc1bFg3w9GrbzwAyMKmWM9DUT2694c
+
+
+Pubkey: 4kg4bHSiPM87s2zkaxZk2otrqjt5bm4AWQh4SrjwpwVcWnCkFnoUwT85z3KRDNNXkBebA9MZEDZdPNoQd4BFt1sK
+Prvkey: 3xWHdFVpU3zUNEvr1uouimM7safDsugCuuu34yoEJCXj
+
+
+bridge admin creation tx: 4HZ2xLzu97pTB4ejSURTzPUUrcirK6deHndwdJpwP8XQsJjrdXFWQo6MR1hWzWqi5tc4R4Pc936bDGo38SnB4wVa
+
+deposit tx: Tn3WsiCjRZnaVHyvMxRzHpYEYECUrmxKW2DtuoJVtscy95P8Qr7pwupwEUGDq32Y1FEbKTfrhg1ut6t4maCJ32B
+
