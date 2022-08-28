@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/alecthomas/kingpin v2.2.6+incompatible
+	github.com/cbergoon/merkletree v0.2.0
 	github.com/ethereum/go-ethereum v1.10.23
 	github.com/mr-tron/base58 v1.2.0
 	github.com/near/borsh-go v0.3.1
@@ -19,7 +20,9 @@ require (
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/aybabtme/rgbterm v0.0.0-20170906152045-cc83f3b3ce59 // indirect
 	github.com/blendle/zapdriver v1.3.1 // indirect
+	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
 	github.com/dfuse-io/logging v0.0.0-20210109005628-b97a57253f70 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/gagliardetto/binary v0.6.1 // indirect

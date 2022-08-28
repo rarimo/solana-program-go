@@ -41,6 +41,8 @@ func Run(args []string) bool {
 	receiver := runCmd.Flag("receiver", "receiver address").String()
 	network := runCmd.Flag("network", "network code").String()
 	amount := runCmd.Flag("amount", "network code").Uint64()
+	tx := runCmd.Flag("tx", "tx hash").String()
+	prvkey := runCmd.Flag("private-key", "private key to sign").String()
 
 	// custom commands go here...
 
@@ -69,6 +71,7 @@ func Run(args []string) bool {
 		scripts.DepositNative(*seed, *programId, *receiver, *network, *amount)
 	case withdrawNativeCmd.FullCommand():
 		fmt.Println("withdraw-native command")
+		scripts.WithdrawNative(*seed, *programId, *tx, *network, *amount, *prvkey)
 	case depositFTCmd.FullCommand():
 		fmt.Println("deposit-ft command")
 	case withdrawFTCmd.FullCommand():

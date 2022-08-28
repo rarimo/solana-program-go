@@ -44,6 +44,7 @@ type TransferOwnershipArgs struct {
 	Instruction  Instruction
 	NewPublicKey [64]byte
 	Signature    [64]byte
+	RecoveryId   byte
 	Seeds        [32]byte
 }
 
@@ -86,6 +87,7 @@ type WithdrawArgs struct {
 	Instruction Instruction
 	Content     SignedContent
 	Signature   [64]byte
+	RecoveryId  byte
 	Path        [][32]byte
 	Root        [32]byte
 	Seeds       [32]byte
@@ -250,11 +252,10 @@ func DepositNFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.P
 func WithdrawNativeInstruction(programId, bridgeAdmin, owner, withdraw solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionWithdrawNative
 
-	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 6))
-	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
+	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 5))
+	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(withdraw, true, false))
-	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 
