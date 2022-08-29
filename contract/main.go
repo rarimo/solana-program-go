@@ -30,8 +30,8 @@ const (
 	ERC20
 	ERC721
 	ERC1155
-	MetaplexNFT
 	MetaplexFT
+	MetaplexNFT
 )
 
 type InitializeAdminArgs struct {
@@ -323,9 +323,15 @@ func WithdrawNFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana
 		return nil, err
 	}
 
-	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 10))
+	metadata, _, err := solana.FindTokenMetadataAddress(mint)
+	if err != nil {
+		return nil, err
+	}
+
+	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
 	accounts.Append(solana.NewAccountMeta(mint, false, false))
+	accounts.Append(solana.NewAccountMeta(metadata, false, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))

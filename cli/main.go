@@ -43,6 +43,7 @@ func Run(args []string) bool {
 	amount := runCmd.Flag("amount", "network code").Uint64()
 	tx := runCmd.Flag("tx", "tx hash").String()
 	prvkey := runCmd.Flag("private-key", "private key to sign").String()
+	mint := runCmd.Flag("mint", "token mint").String()
 
 	// custom commands go here...
 
@@ -74,8 +75,10 @@ func Run(args []string) bool {
 		scripts.WithdrawNative(*seed, *programId, *tx, *network, *amount, *prvkey)
 	case depositFTCmd.FullCommand():
 		fmt.Println("deposit-ft command")
+		scripts.DepositFT(*seed, *programId, *mint, *receiver, *network, *amount)
 	case withdrawFTCmd.FullCommand():
 		fmt.Println("withdraw-ft command")
+		scripts.WithdrawFT(*seed, *programId, *tx, *mint, *network, *amount, *prvkey)
 	case depositNFTCmd.FullCommand():
 		fmt.Println("deposit-nft command")
 	case withdrawNFTCmd.FullCommand():
