@@ -17,8 +17,12 @@ deposit ft: 4raGbjwLX4muo4n41Jq4xXTvWMqakzFjDkrsTcFwRGM6d7AM5RN81oyLuFj4cTEVnc4d
 
 withdraw ft: 2X1Sao8TSnRnNdo77uwJcN4tXdVVys5u7Ndkv3Pv1aT1BDdiK1hT7bADqokSNSjyxohnPdkJB2aLuqMotEZVcR3u
 
+deposit nft: 2SrH8aMde3FUP8qAkYddBAA3HPoh3eZxb4vXzhPE1eAFKKVPrXbNV3BhpjVsajiH6EPseyv7grHnmsJKJXjbV9U3
+
+withdraw nft: 2BTxBymmkAjscZHY6gbYvJMCjaFMBrvqq13YoDsHiUgVCYKCfncJ4SSeVZDSaGZkBpYZEG2SJjUsW3RLD4c2aAua 
+
 // FT: ECVBA4RrPrmA3B4cheE6xoqzk2m2CJsvhpdkuGmY6T88
-// 
+// NFT: 5bW7KPvZwtxqv3d2y51sdxZ4AoZsFiR5iHUWUzRCr4FQ
 
 
 
