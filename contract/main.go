@@ -34,11 +34,20 @@ const (
 	MetaplexNFT
 )
 
+const (
+	InitializeAdminBridgeAdminIndex = iota
+	InitializeAdminFeePayerIndex
+)
+
 type InitializeAdminArgs struct {
 	Instruction Instruction
 	PublicKey   [64]byte
 	Seeds       [32]byte
 }
+
+const (
+	TransferOwnershipBridgeAdminIndex = iota
+)
 
 type TransferOwnershipArgs struct {
 	Instruction  Instruction
@@ -47,6 +56,12 @@ type TransferOwnershipArgs struct {
 	RecoveryId   byte
 	Seeds        [32]byte
 }
+
+const (
+	DepositNativeBridgeAdminIndex = iota
+	DepositNativeDepositIndex
+	DepositNativeOwnerIndex
+)
 
 type DepositNativeArgs struct {
 	Instruction     Instruction
@@ -57,6 +72,15 @@ type DepositNativeArgs struct {
 	Nonce           [32]byte
 }
 
+const (
+	DepositFTBridgeAdminIndex = iota
+	DepositFTMintIndex
+	DepositFTOwnerAssocIndex
+	DepositFTBridgeAssocIndex
+	DepositFTDepositIndex
+	DepositFTOwnerIndex
+)
+
 type DepositFTArgs struct {
 	Instruction     Instruction
 	Amount          uint64
@@ -65,6 +89,15 @@ type DepositFTArgs struct {
 	Seeds           [32]byte
 	Nonce           [32]byte
 }
+
+const (
+	DepositNFTBridgeAdminIndex = iota
+	DepositNFTMintIndex
+	DepositNFTOwnerAssocIndex
+	DepositNFTBridgeAssocIndex
+	DepositNFTDepositIndex
+	DepositNFTOwnerIndex
+)
 
 type DepositNFTArgs struct {
 	Instruction     Instruction
@@ -82,6 +115,31 @@ type SignedContent struct {
 	Amount      uint64
 	TokenType   TokenType
 }
+
+const (
+	WithdrawNativeBridgeAdminIndex = iota
+	WithdrawNativeOwnerIndex
+	WithdrawNativeWithdrawIndex
+)
+
+const (
+	WithdrawFTBridgeAdminIndex = iota
+	WithdrawFTMintIndex
+	WithdrawFTOwnerIndex
+	WithdrawFTOwnerAssocIndex
+	WithdrawFTBridgeAssocIndex
+	WithdrawFTWithdrawIndex
+)
+
+const (
+	WithdrawNFTBridgeAdminIndex = iota
+	WithdrawNFTMintIndex
+	WithdrawNFTMetadataIndex
+	WithdrawNFTOwnerIndex
+	WithdrawNFTOwnerAssocIndex
+	WithdrawNFTBridgeAssocIndex
+	WithdrawNFTWithdrawIndex
+)
 
 type WithdrawArgs struct {
 	Instruction Instruction
