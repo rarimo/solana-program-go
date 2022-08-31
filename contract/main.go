@@ -107,15 +107,6 @@ type DepositNFTArgs struct {
 	Nonce           [32]byte
 }
 
-type SignedContent struct {
-	TxHash      string
-	AddressFrom string
-	TokenIdFrom string
-	NetworkFrom string
-	Amount      uint64
-	TokenType   TokenType
-}
-
 const (
 	WithdrawNativeBridgeAdminIndex = iota
 	WithdrawNativeOwnerIndex
@@ -143,12 +134,13 @@ const (
 
 type WithdrawArgs struct {
 	Instruction Instruction
-	Content     SignedContent
-	Signature   [64]byte
-	RecoveryId  byte
-	Path        [][32]byte
-	Root        [32]byte
-	Seeds       [32]byte
+	// Hash of tx | event_id | network_from
+	OriginHash [32]byte
+	Amount     uint64
+	Signature  [64]byte
+	RecoveryId byte
+	Path       [][32]byte
+	Seeds      [32]byte
 }
 
 type MintFTArgs struct {

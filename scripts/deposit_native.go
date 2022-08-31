@@ -9,7 +9,7 @@ import (
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
 )
 
-func DepositNative(adminSeed, program, receiver, network string, amount uint64) {
+func DepositNative(adminSeed, program, receiver, network string, amount uint64, ownerPrivateKey string) {
 	seed := getSeedFromString(adminSeed)
 	nonce := getRandomNonce()
 	args := contract.DepositNativeArgs{
@@ -18,6 +18,11 @@ func DepositNative(adminSeed, program, receiver, network string, amount uint64) 
 		ReceiverAddress: receiver,
 		Seeds:           seed,
 		Nonce:           nonce,
+	}
+
+	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
+	if err != nil {
+		panic(err)
 	}
 
 	programId, err := solana.PublicKeyFromBase58(program)
@@ -35,7 +40,7 @@ func DepositNative(adminSeed, program, receiver, network string, amount uint64) 
 		panic(err)
 	}
 
-	instruction, err := contract.DepositNativeInstruction(programId, bridgeAdmin, deposit, FeePayerKey.PublicKey(), args)
+	instruction, err := contract.DepositNativeInstruction(programId, bridgeAdmin, deposit, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}
@@ -50,13 +55,13 @@ func DepositNative(adminSeed, program, receiver, network string, amount uint64) 
 			instruction,
 		},
 		blockhash.Value.Blockhash,
-		solana.TransactionPayer(FeePayerKey.PublicKey()),
+		solana.TransactionPayer(owner.PublicKey()),
 	)
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = tx.AddSignature(FeePayerKey)
+	_, err = tx.AddSignature(owner)
 	if err != nil {
 		panic(err)
 	}
