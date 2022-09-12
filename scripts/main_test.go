@@ -1,11 +1,34 @@
 package scripts
 
 import (
+	"encoding/binary"
 	"fmt"
 	"testing"
 
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/mr-tron/base58"
 )
+
+func TestInputData(t *testing.T) {
+	amount := make([]byte, 8)
+	binary.BigEndian.PutUint64(amount, uint64(500000000000))
+	address := common.HexToAddress("0x5B38Da6a701c568545dCfcB03FcB875f56beddC4")
+	arr := append(append(make([]byte, 24), amount...), address.Bytes()...)
+
+	// [["0","0x000000000000000000000000000000000000000000000000000000746a5288005b38da6a701c568545dcfcb03fcb875f56beddc4"],["0","0x000000000000000000000000000000000000000000000000000000746a5288005b38da6a701c568545dcfcb03fcb875f56beddc4"]]
+
+	/*fmt.Print("[")
+	for i := 3; i < 52; i += 4 {
+		fmt.Printf("\"%s\", ", hexutil.Encode(append([]byte{}, arr[i-3], arr[i-2], arr[i-1], arr[i])))
+	}
+
+	// ["0x00000000", "0x00000000", "0x00000000", "0x00000000", "0x00000000", "0x00000000", "0x000000e8", "0xd4a51000", "0x5b38da6a", "0x701c5685", "0x45dcfcb0", "0x3fcb875f", "0x56beddc4"]
+	fmt.Print("]")*/
+
+	fmt.Println(len(arr))
+	fmt.Println(hexutil.Encode(arr))
+}
 
 func TestInitAdmin(t *testing.T) {
 	_, seed := GenSeed("GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ")
@@ -93,6 +116,32 @@ func TestWithdrawNFT(t *testing.T) {
 		"A32b3PiVnbwNB4pXyS8Wsfca8HodGtyiPhGbAcakZXjX",
 		"Solana",
 		"4nE1f6GjLjVesk4GUEDuDoGwTc72xKdYfQpFrGRZwuNS",
+		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
+	)
+}
+
+func TestMintFT(t *testing.T) {
+	MintFT(
+		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
+		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
+		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
+		1000_000_000_000,
+	)
+}
+
+func TestMintNFTCollection(t *testing.T) {
+	MintNFTCollection(
+		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
+		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
+		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
+	)
+}
+
+func TestMintNFT(t *testing.T) {
+	MintNFT(
+		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
+		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
+		"3rodirBaxTbx6LTjs5P6wdMQAkvXWM21QTJHFNAgfSDw",
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)
 }

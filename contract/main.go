@@ -418,7 +418,7 @@ func MintFTInstruction(programId, bridgeAdmin, mint, payer solana.PublicKey, arg
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 10))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
-	accounts.Append(solana.NewAccountMeta(mint, true, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, true))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(metadata, true, false))
 	accounts.Append(solana.NewAccountMeta(payer, true, true))
@@ -462,7 +462,7 @@ func MintNFTVerifiedInstruction(programId, bridgeAdmin, mint, payer, collection 
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
-	accounts.Append(solana.NewAccountMeta(mint, true, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, true))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(metadata, true, false))
 	accounts.Append(solana.NewAccountMeta(masterEdition, true, false))
@@ -522,7 +522,7 @@ func MintNFTInstruction(programId, bridgeAdmin, mint, payer solana.PublicKey, ar
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
-	accounts.Append(solana.NewAccountMeta(mint, true, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, true))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(metadata, true, false))
 	accounts.Append(solana.NewAccountMeta(masterEdition, true, false))
