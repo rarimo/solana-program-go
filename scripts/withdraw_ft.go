@@ -2,18 +2,19 @@ package scripts
 
 import (
 	"context"
-	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/rand"
-	"encoding/binary"
 	"fmt"
 
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/mr-tron/base58"
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
 	merkle "gitlab.com/rarify-protocol/go-merkle"
+	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
 )
 
@@ -39,24 +40,21 @@ func WithdrawFT(adminSeed, program, txHash, token, eventId, networkFrom string, 
 		panic(err)
 	}
 
-	amountBinary := make([]byte, 8)
-	binary.BigEndian.PutUint64(amountBinary, amount)
-
-	targetContent := HashContent{
-		TxHash:         txHash,
-		CurrentNetwork: networkFrom,
-		EventId:        eventId,
-		TargetAddress:  []byte{},
-		TargetId:       mint.Bytes(),
+	targetContent := xcrypto.HashContent{
+		Origin:         origin.NewDefaultOrigin(txHash, networkFrom, eventId).GetOrigin(),
 		Receiver:       owner.PublicKey().Bytes(),
 		TargetNetwork:  "Solana",
-		Amount:         amountBinary,
-		ProgramId:      programId.Bytes(),
+		TargetContract: programId.Bytes(),
+		Data: operations.NewTransferOperation(
+			hexutil.Encode(mint.Bytes()),
+			"",
+			fmt.Sprint(amount), "Tether USD", "USDT", "").GetContent(),
 	}
 
-	t := merkle.NewTree(crypto.Keccak256, content1, targetContent, content2)
+	t := merkle.NewTree(crypto.Keccak256, content1, content2, content3, targetContent, content4, content5, content6, content7, content8, content9)
 
 	path, _ := t.Path(targetContent)
+	fmt.Println("Path len: " + fmt.Sprint(len(path)))
 
 	prvKey, err := base58.Decode(privateKey)
 	if err != nil {
@@ -71,37 +69,31 @@ func WithdrawFT(adminSeed, program, txHash, token, eventId, networkFrom string, 
 	puk := elliptic.Marshal(secp256k1.S256(), pk.X, pk.Y)
 	fmt.Println("PUB KEY: " + base58.Encode(puk[1:]))
 
-	r, s, err := ecdsa.Sign(rand.Reader, pk, t.Root())
+	signature, err := crypto.Sign(t.Root(), pk)
 	if err != nil {
 		panic(err)
 	}
 
-	var rb [32]byte
-	var sb [32]byte
-
-	copy(rb[:], r.Bytes())
-	copy(sb[:], s.Bytes())
-
-	signature := append(rb[:], sb[:]...)
-
 	fmt.Printf("Signature %s\n", base58.Encode(signature[:64]))
 
-	recoveredKey, err := secp256k1.RecoverPubkey(t.Root(), append(signature, 1))
+	recoveredKey, err := secp256k1.RecoverPubkey(t.Root(), signature)
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("Recovered pub key " + base58.Encode(recoveredKey[1:]))
 
+	fmt.Println("Origin:" + base58.Encode(targetContent.Origin))
+
 	args := contract.WithdrawArgs{
 		Amount:     amount,
 		Path:       make([][32]byte, len(path)),
-		RecoveryId: 1,
+		RecoveryId: signature[64],
 		Seeds:      seed,
+		Origin:     targetContent.Origin,
 	}
 
 	copy(args.Signature[:], signature[:64])
-	copy(args.OriginHash[:], targetContent.OriginHash())
 
 	fmt.Println("Content hash: " + base58.Encode(targetContent.CalculateHash()))
 
@@ -109,7 +101,7 @@ func WithdrawFT(adminSeed, program, txHash, token, eventId, networkFrom string, 
 		copy(args.Path[i][:], hash)
 	}
 
-	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.OriginHash()}, programId)
+	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.Origin}, programId)
 	if err != nil {
 		panic(err)
 	}

@@ -30,6 +30,12 @@ func TestInputData(t *testing.T) {
 	fmt.Println(hexutil.Encode(arr))
 }
 
+func TestName(t *testing.T) {
+	prv, _ := base58.Decode("2hAqGBGdmU4M1zNFHftwfwsMamZp3CcZnGxSza1WZLQArbVmMb58VqfyCtPQWY2g9h24YaMbyEU4axfVnowUkea5")
+
+	fmt.Println(hexutil.Encode(append([]byte{4}, prv...)))
+}
+
 func TestInitAdmin(t *testing.T) {
 	_, seed := GenSeed("GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ")
 	fmt.Println(base58.Encode(seed[:]))
@@ -49,9 +55,9 @@ func TestDepositNative(t *testing.T) {
 	DepositNative(
 		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
 		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		"FCpFKSEboCUGg1Qs8NFwH2suMAHYWvFUUiVWk8cKwNqf",
+		"0xd30a6d9589a4ad1845f4cfb6cdafa47e2d444fcc568cef04525f1d700f4e53aa",
 		"Solana",
-		100000000,
+		10000000,
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)
 }
@@ -96,11 +102,11 @@ func TestWithdrawFT(t *testing.T) {
 	WithdrawFT(
 		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
 		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		"tLTG4TGSbsaL3brhkYQ2JMb72DmXZsat1RYs1yk5VGpAes2rGUTzjLGdAC8Ay67XFyUjgXHkzSmwLe9ac8JzpkK",
-		"ECVBA4RrPrmA3B4cheE6xoqzk2m2CJsvhpdkuGmY6T88",
-		"",
+		"UYxBXBjVnDiQW7C8TrVQ95GEk4VbHUDBBTKuGPcrbAHZbCBN9JAvTeTtgbNMhxEe26g8jitmaXQcgHt9KYxfFkM",
+		"AwgqsvhfQLorGrqKpXzTe22DtLt8be333Efz8u3dN2hm",
+		"0",
 		"Solana",
-		100000000,
+		100000,
 		"4nE1f6GjLjVesk4GUEDuDoGwTc72xKdYfQpFrGRZwuNS",
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)

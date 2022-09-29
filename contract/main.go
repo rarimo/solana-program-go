@@ -134,13 +134,12 @@ const (
 
 type WithdrawArgs struct {
 	Instruction Instruction
-	// Hash of tx | event_id | network_from
-	OriginHash [32]byte
-	Amount     uint64
-	Signature  [64]byte
-	RecoveryId byte
-	Path       [][32]byte
-	Seeds      [32]byte
+	Origin      []byte
+	Amount      uint64
+	Signature   [64]byte
+	RecoveryId  byte
+	Path        [][32]byte
+	Seeds       [32]byte
 }
 
 type MintFTArgs struct {
@@ -336,9 +335,15 @@ func WithdrawFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana.
 		return nil, err
 	}
 
+	metadata, _, err := solana.FindTokenMetadataAddress(mint)
+	if err != nil {
+		return nil, err
+	}
+
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 10))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
 	accounts.Append(solana.NewAccountMeta(mint, false, false))
+	accounts.Append(solana.NewAccountMeta(metadata, false, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))

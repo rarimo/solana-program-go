@@ -2,18 +2,19 @@ package scripts
 
 import (
 	"context"
-	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/rand"
-	"encoding/binary"
 	"fmt"
 
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/mr-tron/base58"
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
 	merkle "gitlab.com/rarify-protocol/go-merkle"
+	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
 )
 
@@ -39,24 +40,20 @@ func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, p
 		panic(err)
 	}
 
-	amountBinary := make([]byte, 8)
-	binary.BigEndian.PutUint64(amountBinary, uint64(1))
-
 	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
 	if err != nil {
 		panic(err)
 	}
 
-	targetContent := HashContent{
-		TxHash:         txHash,
-		CurrentNetwork: networkFrom,
-		EventId:        eventId,
-		TargetAddress:  collection.Bytes(),
-		TargetId:       mint.Bytes(),
+	targetContent := xcrypto.HashContent{
+		Origin:         origin.NewDefaultOrigin(txHash, networkFrom, eventId).GetOrigin(),
 		Receiver:       owner.PublicKey().Bytes(),
 		TargetNetwork:  "Solana",
-		Amount:         amountBinary,
-		ProgramId:      programId.Bytes(),
+		TargetContract: programId.Bytes(),
+		Data: operations.NewTransferOperation(
+			hexutil.Encode(collection.Bytes()),
+			hexutil.Encode(mint.Bytes()),
+			"", "CryptoPunk", "CRY", "").GetContent(),
 	}
 
 	t := merkle.NewTree(crypto.Keccak256, content1, targetContent, content2)
@@ -75,22 +72,14 @@ func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, p
 	puk := elliptic.Marshal(secp256k1.S256(), pk.X, pk.Y)
 	fmt.Println("PUB KEY: " + base58.Encode(puk[1:]))
 
-	r, s, err := ecdsa.Sign(rand.Reader, pk, t.Root())
+	signature, err := crypto.Sign(t.Root(), pk)
 	if err != nil {
 		panic(err)
 	}
 
-	var rb [32]byte
-	var sb [32]byte
-
-	copy(rb[:], r.Bytes())
-	copy(sb[:], s.Bytes())
-
-	signature := append(rb[:], sb[:]...)
-
 	fmt.Printf("Signature %s\n", base58.Encode(signature[:64]))
 
-	recoveredKey, err := secp256k1.RecoverPubkey(t.Root(), append(signature, 1))
+	recoveredKey, err := secp256k1.RecoverPubkey(t.Root(), signature)
 	if err != nil {
 		panic(err)
 	}
@@ -102,17 +91,17 @@ func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, p
 		Path:       make([][32]byte, len(path)),
 		RecoveryId: 1,
 		Seeds:      seed,
+		Origin:     targetContent.Origin,
 	}
 
 	copy(args.Signature[:], signature[:64])
-	copy(args.OriginHash[:], targetContent.OriginHash())
 
 	fmt.Println("Content hash: " + base58.Encode(targetContent.CalculateHash()))
 	for i, hash := range path {
 		copy(args.Path[i][:], hash)
 	}
 
-	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.OriginHash()}, programId)
+	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.Origin}, programId)
 	if err != nil {
 		panic(err)
 	}

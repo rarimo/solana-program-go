@@ -15,9 +15,9 @@ func MintFT(adminSeed, program, payerPrvKey string, amount uint64) {
 
 	args := contract.MintFTArgs{
 		Data: metaplex.DataV2{
-			Name:   "Test FT",
-			Symbol: "TFT",
-			URI:    "google.com",
+			Name:   "Tether USD",
+			Symbol: "USDT",
+			URI:    "",
 		},
 		Amount:   amount,
 		Seeds:    seed,
