@@ -101,7 +101,7 @@ func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, p
 		copy(args.Path[i][:], hash)
 	}
 
-	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.Origin}, programId)
+	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.Origin[:]}, programId)
 	if err != nil {
 		panic(err)
 	}

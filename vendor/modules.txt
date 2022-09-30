@@ -161,7 +161,7 @@ github.com/tidwall/pretty
 # gitlab.com/rarify-protocol/go-merkle v0.0.0-20220831221733-8f4135fe9f1f
 ## explicit; go 1.18
 gitlab.com/rarify-protocol/go-merkle
-# gitlab.com/rarify-protocol/rarimo-core v0.0.0-20220929131401-244bc7439193
+# gitlab.com/rarify-protocol/rarimo-core v0.0.0-20220930095051-07cdb32282dd
 ## explicit; go 1.18
 gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto
 gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations

@@ -83,7 +83,7 @@ func WithdrawFT(adminSeed, program, txHash, token, eventId, networkFrom string, 
 
 	fmt.Println("Recovered pub key " + base58.Encode(recoveredKey[1:]))
 
-	fmt.Println("Origin:" + base58.Encode(targetContent.Origin))
+	fmt.Println("Origin:" + base58.Encode(targetContent.Origin[:]))
 
 	args := contract.WithdrawArgs{
 		Amount:     amount,
@@ -101,7 +101,7 @@ func WithdrawFT(adminSeed, program, txHash, token, eventId, networkFrom string, 
 		copy(args.Path[i][:], hash)
 	}
 
-	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.Origin}, programId)
+	withdraw, _, err := solana.FindProgramAddress([][]byte{targetContent.Origin[:]}, programId)
 	if err != nil {
 		panic(err)
 	}

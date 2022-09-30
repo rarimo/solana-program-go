@@ -134,7 +134,7 @@ const (
 
 type WithdrawArgs struct {
 	Instruction Instruction
-	Origin      []byte
+	Origin      [32]byte
 	Amount      uint64
 	Signature   [64]byte
 	RecoveryId  byte
