@@ -23,7 +23,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content2 = xcrypto.HashContent{
@@ -34,7 +34,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content3 = xcrypto.HashContent{
@@ -45,7 +45,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content4 = xcrypto.HashContent{
@@ -56,7 +56,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content5 = xcrypto.HashContent{
@@ -67,7 +67,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content6 = xcrypto.HashContent{
@@ -78,7 +78,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content7 = xcrypto.HashContent{
@@ -89,7 +89,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content8 = xcrypto.HashContent{
@@ -100,7 +100,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 
 	content9 = xcrypto.HashContent{
@@ -111,7 +111,7 @@ var (
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "").GetContent(),
+			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
 	}
 )
 

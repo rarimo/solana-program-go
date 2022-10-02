@@ -53,7 +53,7 @@ func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, p
 		Data: operations.NewTransferOperation(
 			hexutil.Encode(collection.Bytes()),
 			hexutil.Encode(mint.Bytes()),
-			"", "CryptoPunk", "CRY", "").GetContent(),
+			"", "CryptoPunk", "CRY", "", 9).GetContent(),
 	}
 
 	t := merkle.NewTree(crypto.Keccak256, content1, targetContent, content2)

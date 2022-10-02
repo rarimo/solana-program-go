@@ -5,7 +5,6 @@ import (
 
 	"github.com/near/borsh-go"
 	"github.com/olegfomenko/solana-go"
-	"gitlab.com/rarify-protocol/solana-program-go/metaplex"
 )
 
 type Instruction borsh.Enum
@@ -19,8 +18,7 @@ const (
 	InstructionWithdrawNative
 	InstructionWithdrawFT
 	InstructionWithdrawNFT
-	InstructionMintFT
-	InstructionMintNFT
+	InstructionMintCollection
 )
 
 type TokenType borsh.Enum
@@ -132,29 +130,30 @@ const (
 	WithdrawNFTWithdrawIndex
 )
 
+type SignedMetadata struct {
+	Name     string
+	Symbol   string
+	URI      string
+	Decimals uint8
+}
+
 type WithdrawArgs struct {
-	Instruction Instruction
-	Origin      [32]byte
-	Amount      uint64
-	Signature   [64]byte
-	RecoveryId  byte
-	Path        [][32]byte
-	Seeds       [32]byte
+	Instruction    Instruction
+	Origin         [32]byte
+	Amount         uint64
+	Signature      [64]byte
+	RecoveryId     byte
+	Path           [][32]byte
+	Seeds          [32]byte
+	TokenSeed      *[32]byte
+	SignedMetadata *SignedMetadata
 }
 
-type MintFTArgs struct {
+type MintCollectionArgs struct {
 	Instruction Instruction
-	Data        metaplex.DataV2
+	Data        SignedMetadata
 	Seeds       [32]byte
-	Amount      uint64
-	Decimals    byte
-}
-
-type MintNFTArgs struct {
-	Instruction Instruction
-	Data        metaplex.DataV2
-	Seeds       [32]byte
-	Verify      bool
+	TokenSeed   *[32]byte
 }
 
 func InitializeAdminInstruction(programId, bridgeAdmin, feePayer solana.PublicKey, args InitializeAdminArgs) (solana.Instruction, error) {
@@ -342,8 +341,8 @@ func WithdrawFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana.
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 10))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(mint, false, false))
-	accounts.Append(solana.NewAccountMeta(metadata, false, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, false))
+	accounts.Append(solana.NewAccountMeta(metadata, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
@@ -351,6 +350,7 @@ func WithdrawFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana.
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
 
 	data, err := borsh.Serialize(args)
@@ -385,8 +385,8 @@ func WithdrawNFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(mint, false, false))
-	accounts.Append(solana.NewAccountMeta(metadata, false, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, false))
+	accounts.Append(solana.NewAccountMeta(metadata, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
@@ -394,6 +394,7 @@ func WithdrawNFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
 
 	data, err := borsh.Serialize(args)
@@ -408,8 +409,8 @@ func WithdrawNFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana
 	), nil
 }
 
-func MintFTInstruction(programId, bridgeAdmin, mint, payer solana.PublicKey, args MintFTArgs) (solana.Instruction, error) {
-	args.Instruction = InstructionMintFT
+func MintCollectionInstruction(programId, bridgeAdmin, mint, payer solana.PublicKey, args MintCollectionArgs) (solana.Instruction, error) {
+	args.Instruction = InstructionMintCollection
 
 	metadata, _, err := solana.FindTokenMetadataAddress(mint)
 	if err != nil {
@@ -427,113 +428,6 @@ func MintFTInstruction(programId, bridgeAdmin, mint, payer solana.PublicKey, arg
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(metadata, true, false))
 	accounts.Append(solana.NewAccountMeta(payer, true, true))
-
-	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
-
-	data, err := borsh.Serialize(args)
-	if err != nil {
-		return nil, err
-	}
-
-	return solana.NewInstruction(
-		programId,
-		accounts,
-		data,
-	), nil
-}
-
-func MintNFTVerifiedInstruction(programId, bridgeAdmin, mint, payer, collection solana.PublicKey, args MintNFTArgs) (solana.Instruction, error) {
-	args.Instruction = InstructionMintNFT
-	args.Verify = true
-
-	metadata, _, err := solana.FindTokenMetadataAddress(mint)
-	if err != nil {
-		return nil, err
-	}
-
-	masterEdition, _, err := metaplex.FindTokenMasterEditionAddress(mint)
-	if err != nil {
-		return nil, err
-	}
-
-	bridgeAssoc, _, err := solana.FindAssociatedTokenAddress(bridgeAdmin, mint)
-	if err != nil {
-		return nil, err
-	}
-
-	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
-	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
-	accounts.Append(solana.NewAccountMeta(mint, true, true))
-	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
-	accounts.Append(solana.NewAccountMeta(metadata, true, false))
-	accounts.Append(solana.NewAccountMeta(masterEdition, true, false))
-
-	accounts.Append(solana.NewAccountMeta(payer, true, true))
-
-	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
-
-	collectionMetadata, _, err := solana.FindTokenMetadataAddress(collection)
-	if err != nil {
-		return nil, err
-	}
-
-	collectionMasterEdition, _, err := metaplex.FindTokenMasterEditionAddress(collection)
-	if err != nil {
-		return nil, err
-	}
-
-	accounts.Append(solana.NewAccountMeta(collection, false, false))
-	accounts.Append(solana.NewAccountMeta(collectionMetadata, false, false))
-	accounts.Append(solana.NewAccountMeta(collectionMasterEdition, false, false))
-
-	data, err := borsh.Serialize(args)
-	if err != nil {
-		return nil, err
-	}
-
-	return solana.NewInstruction(
-		programId,
-		accounts,
-		data,
-	), nil
-}
-
-func MintNFTInstruction(programId, bridgeAdmin, mint, payer solana.PublicKey, args MintNFTArgs) (solana.Instruction, error) {
-	args.Instruction = InstructionMintNFT
-	args.Verify = false
-
-	metadata, _, err := solana.FindTokenMetadataAddress(mint)
-	if err != nil {
-		return nil, err
-	}
-
-	masterEdition, _, err := metaplex.FindTokenMasterEditionAddress(mint)
-	if err != nil {
-		return nil, err
-	}
-
-	bridgeAssoc, _, err := solana.FindAssociatedTokenAddress(bridgeAdmin, mint)
-	if err != nil {
-		return nil, err
-	}
-
-	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
-	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
-	accounts.Append(solana.NewAccountMeta(mint, true, true))
-	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
-	accounts.Append(solana.NewAccountMeta(metadata, true, false))
-	accounts.Append(solana.NewAccountMeta(masterEdition, true, false))
-
-	accounts.Append(solana.NewAccountMeta(payer, true, true))
-
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))

@@ -42,7 +42,7 @@ func WithdrawNative(adminSeed, program, txHash, eventId, networkFrom string, amo
 		Data: operations.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint(amount), "", "", "").GetContent(),
+			fmt.Sprint(amount), "", "", "", 9).GetContent(),
 	}
 
 	t := merkle.NewTree(crypto.Keccak256, content1, targetContent, content2)

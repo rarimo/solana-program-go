@@ -8,7 +8,7 @@ require (
 	github.com/near/borsh-go v0.3.1
 	github.com/olegfomenko/solana-go v1.4.2-0.20220825130821-a1f0ac7c5b0a
 	gitlab.com/rarify-protocol/go-merkle v0.0.0-20220831221733-8f4135fe9f1f
-	gitlab.com/rarify-protocol/rarimo-core v0.0.0-20220930095051-07cdb32282dd
+	gitlab.com/rarify-protocol/rarimo-core v0.0.0-20221002005905-178ba14c2bfe
 )
 
 require (
