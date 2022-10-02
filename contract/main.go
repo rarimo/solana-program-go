@@ -86,6 +86,7 @@ type DepositFTArgs struct {
 	ReceiverAddress string
 	Seeds           [32]byte
 	Nonce           [32]byte
+	TokenSeed       *[32]byte
 }
 
 const (
@@ -103,6 +104,7 @@ type DepositNFTArgs struct {
 	ReceiverAddress string
 	Seeds           [32]byte
 	Nonce           [32]byte
+	TokenSeed       *[32]byte
 }
 
 const (
@@ -234,7 +236,7 @@ func DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.Pu
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 10))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(mint, false, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, false))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(deposit, true, false))
@@ -273,7 +275,7 @@ func DepositNFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.P
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 10))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(mint, false, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, false))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(deposit, true, false))

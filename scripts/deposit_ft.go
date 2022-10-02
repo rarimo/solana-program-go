@@ -78,3 +78,76 @@ func DepositFT(adminSeed, program, token, receiver, network string, amount uint6
 
 	Submit(binTx)
 }
+
+func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, amount uint64, ownerPrivateKey string) {
+	seed := getSeedFromString(adminSeed)
+	nonce := getRandomNonce()
+	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
+	if err != nil {
+		panic(err)
+	}
+
+	programId, err := solana.PublicKeyFromBase58(program)
+	if err != nil {
+		panic(err)
+	}
+
+	token := getSeedFromString(tokenSeed)
+
+	mint, _, err := solana.FindProgramAddress([][]byte{token[:]}, programId)
+	if err != nil {
+		panic(err)
+	}
+
+	args := contract.DepositFTArgs{
+		Amount:          amount,
+		NetworkTo:       network,
+		ReceiverAddress: receiver,
+		Seeds:           seed,
+		Nonce:           nonce,
+		TokenSeed:       &token,
+	}
+
+	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	if err != nil {
+		panic(err)
+	}
+
+	deposit, _, err := solana.FindProgramAddress([][]byte{nonce[:]}, programId)
+	if err != nil {
+		panic(err)
+	}
+
+	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner.PublicKey(), args)
+	if err != nil {
+		panic(err)
+	}
+
+	blockhash, err := Client.GetRecentBlockhash(context.TODO(), rpc.CommitmentFinalized)
+	if err != nil {
+		panic(err)
+	}
+
+	tx, err := solana.NewTransaction(
+		[]solana.Instruction{
+			instruction,
+		},
+		blockhash.Value.Blockhash,
+		solana.TransactionPayer(owner.PublicKey()),
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = tx.AddSignature(owner)
+	if err != nil {
+		panic(err)
+	}
+
+	binTx, err := tx.MarshalBinary()
+	if err != nil {
+		panic(err)
+	}
+
+	Submit(binTx)
+}
