@@ -57,7 +57,6 @@ type TransferOwnershipArgs struct {
 
 const (
 	DepositNativeBridgeAdminIndex = iota
-	DepositNativeDepositIndex
 	DepositNativeOwnerIndex
 )
 
@@ -74,7 +73,6 @@ const (
 	DepositFTMintIndex
 	DepositFTOwnerAssocIndex
 	DepositFTBridgeAssocIndex
-	DepositFTDepositIndex
 	DepositFTOwnerIndex
 )
 
@@ -92,7 +90,6 @@ const (
 	DepositNFTMintIndex
 	DepositNFTOwnerAssocIndex
 	DepositNFTBridgeAssocIndex
-	DepositNFTDepositIndex
 	DepositNFTOwnerIndex
 )
 
