@@ -67,7 +67,6 @@ type DepositNativeArgs struct {
 	NetworkTo       string
 	ReceiverAddress string
 	Seeds           [32]byte
-	Nonce           [32]byte
 }
 
 const (
@@ -85,7 +84,6 @@ type DepositFTArgs struct {
 	NetworkTo       string
 	ReceiverAddress string
 	Seeds           [32]byte
-	Nonce           [32]byte
 	TokenSeed       *[32]byte
 }
 
@@ -103,7 +101,6 @@ type DepositNFTArgs struct {
 	NetworkTo       string
 	ReceiverAddress string
 	Seeds           [32]byte
-	Nonce           [32]byte
 	TokenSeed       *[32]byte
 }
 
@@ -197,12 +194,11 @@ func TransferOwnershipInstruction(programId, bridgeAdmin solana.PublicKey, args 
 	), nil
 }
 
-func DepositNativeInstruction(programId, bridgeAdmin, deposit, owner solana.PublicKey, args DepositNativeArgs) (solana.Instruction, error) {
+func DepositNativeInstruction(programId, bridgeAdmin, owner solana.PublicKey, args DepositNativeArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionDepositNative
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 5))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, true, false))
-	accounts.Append(solana.NewAccountMeta(deposit, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
@@ -221,7 +217,7 @@ func DepositNativeInstruction(programId, bridgeAdmin, deposit, owner solana.Publ
 	), nil
 }
 
-func DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.PublicKey, args DepositFTArgs) (solana.Instruction, error) {
+func DepositFTInstruction(programId, bridgeAdmin, mint, owner solana.PublicKey, args DepositFTArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionDepositFT
 
 	bridgeAssoc, _, err := solana.FindAssociatedTokenAddress(bridgeAdmin, mint)
@@ -239,7 +235,6 @@ func DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.Pu
 	accounts.Append(solana.NewAccountMeta(mint, true, false))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
-	accounts.Append(solana.NewAccountMeta(deposit, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
@@ -260,7 +255,7 @@ func DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.Pu
 	), nil
 }
 
-func DepositNFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.PublicKey, args DepositNFTArgs) (solana.Instruction, error) {
+func DepositNFTInstruction(programId, bridgeAdmin, mint, owner solana.PublicKey, args DepositNFTArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionDepositNFT
 
 	bridgeAssoc, _, err := solana.FindAssociatedTokenAddress(bridgeAdmin, mint)
@@ -278,7 +273,6 @@ func DepositNFTInstruction(programId, bridgeAdmin, mint, deposit, owner solana.P
 	accounts.Append(solana.NewAccountMeta(mint, true, false))
 	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
-	accounts.Append(solana.NewAccountMeta(deposit, true, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))

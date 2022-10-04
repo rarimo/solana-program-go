@@ -10,13 +10,11 @@ import (
 
 func DepositNFT(adminSeed, program, token, receiver, network string, ownerPrivateKey string) {
 	seed := getSeedFromString(adminSeed)
-	nonce := getRandomNonce()
 
 	args := contract.DepositNFTArgs{
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
 		Seeds:           seed,
-		Nonce:           nonce,
 	}
 
 	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
@@ -39,12 +37,7 @@ func DepositNFT(adminSeed, program, token, receiver, network string, ownerPrivat
 		panic(err)
 	}
 
-	deposit, _, err := solana.FindProgramAddress([][]byte{nonce[:]}, programId)
-	if err != nil {
-		panic(err)
-	}
-
-	instruction, err := contract.DepositNFTInstruction(programId, bridgeAdmin, mint, deposit, owner.PublicKey(), args)
+	instruction, err := contract.DepositNFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}

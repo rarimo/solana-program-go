@@ -11,13 +11,11 @@ import (
 
 func DepositNative(adminSeed, program, receiver, network string, amount uint64, ownerPrivateKey string) {
 	seed := getSeedFromString(adminSeed)
-	nonce := getRandomNonce()
 	args := contract.DepositNativeArgs{
 		Amount:          amount,
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
 		Seeds:           seed,
-		Nonce:           nonce,
 	}
 
 	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
@@ -35,12 +33,7 @@ func DepositNative(adminSeed, program, receiver, network string, amount uint64, 
 		panic(err)
 	}
 
-	deposit, _, err := solana.FindProgramAddress([][]byte{nonce[:]}, programId)
-	if err != nil {
-		panic(err)
-	}
-
-	instruction, err := contract.DepositNativeInstruction(programId, bridgeAdmin, deposit, owner.PublicKey(), args)
+	instruction, err := contract.DepositNativeInstruction(programId, bridgeAdmin, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}

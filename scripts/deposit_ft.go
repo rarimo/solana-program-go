@@ -10,14 +10,12 @@ import (
 
 func DepositFT(adminSeed, program, token, receiver, network string, amount uint64, ownerPrivateKey string) {
 	seed := getSeedFromString(adminSeed)
-	nonce := getRandomNonce()
 
 	args := contract.DepositFTArgs{
 		Amount:          amount,
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
 		Seeds:           seed,
-		Nonce:           nonce,
 	}
 
 	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
@@ -40,12 +38,7 @@ func DepositFT(adminSeed, program, token, receiver, network string, amount uint6
 		panic(err)
 	}
 
-	deposit, _, err := solana.FindProgramAddress([][]byte{nonce[:]}, programId)
-	if err != nil {
-		panic(err)
-	}
-
-	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner.PublicKey(), args)
+	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}
@@ -81,7 +74,6 @@ func DepositFT(adminSeed, program, token, receiver, network string, amount uint6
 
 func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, amount uint64, ownerPrivateKey string) {
 	seed := getSeedFromString(adminSeed)
-	nonce := getRandomNonce()
 	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
 	if err != nil {
 		panic(err)
@@ -104,7 +96,6 @@ func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, am
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
 		Seeds:           seed,
-		Nonce:           nonce,
 		TokenSeed:       &token,
 	}
 
@@ -113,12 +104,7 @@ func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, am
 		panic(err)
 	}
 
-	deposit, _, err := solana.FindProgramAddress([][]byte{nonce[:]}, programId)
-	if err != nil {
-		panic(err)
-	}
-
-	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, deposit, owner.PublicKey(), args)
+	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}
