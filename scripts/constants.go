@@ -6,7 +6,7 @@ import (
 
 	"github.com/olegfomenko/solana-go/rpc"
 	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operation"
 	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
 )
 
@@ -20,10 +20,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content2 = xcrypto.HashContent{
@@ -31,10 +31,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content3 = xcrypto.HashContent{
@@ -42,10 +42,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content4 = xcrypto.HashContent{
@@ -53,10 +53,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content5 = xcrypto.HashContent{
@@ -64,10 +64,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content6 = xcrypto.HashContent{
@@ -75,10 +75,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content7 = xcrypto.HashContent{
@@ -86,10 +86,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content8 = xcrypto.HashContent{
@@ -97,10 +97,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 
 	content9 = xcrypto.HashContent{
@@ -108,10 +108,10 @@ var (
 		Receiver:       getRandSlice(),
 		TargetNetwork:  "Solana",
 		TargetContract: getRandSlice(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint("1"), "USDT", "USDT", "", 9).GetContent(),
+			fmt.Sprint("1"), "").GetContent(),
 	}
 )
 

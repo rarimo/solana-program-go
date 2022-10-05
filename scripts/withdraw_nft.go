@@ -13,7 +13,7 @@ import (
 	"github.com/olegfomenko/solana-go/rpc"
 	merkle "gitlab.com/rarify-protocol/go-merkle"
 	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operation"
 	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
 )
@@ -50,7 +50,7 @@ func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, p
 		Receiver:       owner.PublicKey().Bytes(),
 		TargetNetwork:  "Solana",
 		TargetContract: programId.Bytes(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferFullMetaOperation(
 			hexutil.Encode(collection.Bytes()),
 			hexutil.Encode(mint.Bytes()),
 			"", "CryptoPunk", "CRY", "", 9).GetContent(),

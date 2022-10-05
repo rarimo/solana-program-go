@@ -12,7 +12,7 @@ import (
 	"github.com/olegfomenko/solana-go/rpc"
 	merkle "gitlab.com/rarify-protocol/go-merkle"
 	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operation"
 	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
 )
@@ -39,10 +39,10 @@ func WithdrawNative(adminSeed, program, txHash, eventId, networkFrom string, amo
 		Receiver:       owner.PublicKey().Bytes(),
 		TargetNetwork:  "Solana",
 		TargetContract: programId.Bytes(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferOperation(
 			"",
 			"",
-			fmt.Sprint(amount), "", "", "", 9).GetContent(),
+			fmt.Sprint(amount), "").GetContent(),
 	}
 
 	t := merkle.NewTree(crypto.Keccak256, content1, targetContent, content2)

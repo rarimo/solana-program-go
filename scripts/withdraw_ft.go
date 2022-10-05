@@ -13,7 +13,7 @@ import (
 	"github.com/olegfomenko/solana-go/rpc"
 	merkle "gitlab.com/rarify-protocol/go-merkle"
 	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operations"
+	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operation"
 	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
 	"gitlab.com/rarify-protocol/solana-program-go/contract"
 )
@@ -45,7 +45,7 @@ func WithdrawFT(adminSeed, program, txHash, token, eventId, networkFrom string, 
 		Receiver:       owner.PublicKey().Bytes(),
 		TargetNetwork:  "Solana",
 		TargetContract: programId.Bytes(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferFullMetaOperation(
 			hexutil.Encode(mint.Bytes()),
 			"",
 			fmt.Sprint(amount), "Tether USD", "USDT", "", 9).GetContent(),
@@ -170,7 +170,7 @@ func WithdrawFTMinted(adminSeed, program, txHash, tokenSeed, eventId, networkFro
 		Receiver:       owner.PublicKey().Bytes(),
 		TargetNetwork:  "Solana",
 		TargetContract: programId.Bytes(),
-		Data: operations.NewTransferOperation(
+		Data: operation.NewTransferFullMetaOperation(
 			hexutil.Encode(mint.Bytes()),
 			"",
 			fmt.Sprint(amount), "Tether USD", "USDT", "", 9).GetContent(),

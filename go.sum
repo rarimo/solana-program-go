@@ -694,6 +694,8 @@ gitlab.com/rarify-protocol/rarimo-core v0.0.0-20220930095051-07cdb32282dd h1:wk9
 gitlab.com/rarify-protocol/rarimo-core v0.0.0-20220930095051-07cdb32282dd/go.mod h1:/fJh2I1la2bnFkfDXhb3xAXEwy7laCPTbRDbKzrHTMw=
 gitlab.com/rarify-protocol/rarimo-core v0.0.0-20221002005905-178ba14c2bfe h1:vYFvnljPTDDXkUMeeL+TUi4v4jhZQILJAi0qU5XM84g=
 gitlab.com/rarify-protocol/rarimo-core v0.0.0-20221002005905-178ba14c2bfe/go.mod h1:/fJh2I1la2bnFkfDXhb3xAXEwy7laCPTbRDbKzrHTMw=
+gitlab.com/rarify-protocol/rarimo-core v0.0.0-20221004183231-2748ef323cf5 h1:IMOjH8h6ryQ9PgtA0pFZNmPSTBSsKvVg7OqUl0HA1+8=
+gitlab.com/rarify-protocol/rarimo-core v0.0.0-20221004183231-2748ef323cf5/go.mod h1:97Lq3SN1pPkvw4laTFDRx055BgracjGwfQRLws31m5c=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/bbolt v1.3.6/go.mod h1:qXsaaIqmgQH0T+OPdb99Bf+PKfBBQVAdyD6TY9G8XM4=
 go.etcd.io/etcd/api/v3 v3.5.0/go.mod h1:cbVKeC6lCfl7j/8jBhAK6aIYO9XOjdptoxU/nLQcPvs=
