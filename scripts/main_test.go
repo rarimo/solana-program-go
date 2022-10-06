@@ -71,7 +71,7 @@ func TestDepositFT(t *testing.T) {
 		"AwgqsvhfQLorGrqKpXzTe22DtLt8be333Efz8u3dN2hm",
 		"0xd30a6d9589a4ad1845f4cfb6cdafa47e2d444fcc568cef04525f1d700f4e53aa",
 		"Solana",
-		10,
+		1,
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)
 }

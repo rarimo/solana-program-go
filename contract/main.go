@@ -66,6 +66,8 @@ type DepositNativeArgs struct {
 	NetworkTo       string
 	ReceiverAddress string
 	Seeds           [32]byte
+	BundleData      *[]byte
+	BundleSeed      *[32]byte
 }
 
 const (
@@ -83,6 +85,8 @@ type DepositFTArgs struct {
 	ReceiverAddress string
 	Seeds           [32]byte
 	TokenSeed       *[32]byte
+	BundleData      *[]byte
+	BundleSeed      *[32]byte
 }
 
 const (
@@ -99,6 +103,8 @@ type DepositNFTArgs struct {
 	ReceiverAddress string
 	Seeds           [32]byte
 	TokenSeed       *[32]byte
+	BundleData      *[]byte
+	BundleSeed      *[32]byte
 }
 
 const (
