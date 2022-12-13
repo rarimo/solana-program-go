@@ -11,11 +11,11 @@ import (
 	"github.com/mr-tron/base58"
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	merkle "gitlab.com/rarify-protocol/go-merkle"
-	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operation"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
-	"gitlab.com/rarify-protocol/solana-program-go/contract"
+	merkle "gitlab.com/rarimo/go-merkle"
+	xcrypto "gitlab.com/rarimo/rarimo-core/x/rarimocore/crypto"
+	"gitlab.com/rarimo/rarimo-core/x/rarimocore/crypto/operation"
+	"gitlab.com/rarimo/rarimo-core/x/rarimocore/crypto/operation/origin"
+	"gitlab.com/rarimo/solana-program-go/contract"
 )
 
 func WithdrawNFT(adminSeed, program, txHash, eventId, token, col, networkFrom, privateKey, ownerPrivateKey string) {

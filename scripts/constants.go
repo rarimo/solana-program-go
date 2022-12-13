@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/olegfomenko/solana-go/rpc"
-	xcrypto "gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/operation"
-	"gitlab.com/rarify-protocol/rarimo-core/x/rarimocore/crypto/origin"
+	xcrypto "gitlab.com/rarimo/rarimo-core/x/rarimocore/crypto"
+	"gitlab.com/rarimo/rarimo-core/x/rarimocore/crypto/operation"
+	"gitlab.com/rarimo/rarimo-core/x/rarimocore/crypto/operation/origin"
 )
 
 const RPC = "https://api.devnet.solana.com"

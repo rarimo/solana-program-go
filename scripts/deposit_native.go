@@ -6,7 +6,7 @@ import (
 
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	"gitlab.com/rarify-protocol/solana-program-go/contract"
+	"gitlab.com/rarimo/solana-program-go/contract"
 )
 
 func DepositNative(adminSeed, program, receiver, network string, amount uint64, ownerPrivateKey string) {
