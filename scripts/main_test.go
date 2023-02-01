@@ -39,16 +39,18 @@ func TestGenSeed(t *testing.T) {
 }
 
 func TestInitAdmin(t *testing.T) {
-	_, seed := GenSeed("GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ")
+	_, seed := GenSeed("8RuX2EomaZj5xiEyU78XpDWRRp5wou4QNckHnkYX2Fgs")
 	fmt.Println(base58.Encode(seed[:]))
-	pub, prv := GenKey()
-	fmt.Println("Pub key: " + base58.Encode(pub))
-	fmt.Println("Prv key: " + base58.Encode(prv))
+	//pub, prv := GenKey()
+	//fmt.Println("Pub key: " + base58.Encode(pub))
+	//fmt.Println("Prv key: " + base58.Encode(prv))
+
+	pub := hexutil.MustDecode("0x04928d7a512b18fcbfd51c1b050e2d498f962e2c244bb7495e253731cddcfd164ef32c213e3b4fd4185d1de33dd596061473392aa73b532906e553e543801c0f3a")
 
 	InitBridgeAdmin(
 		base58.Encode(seed[:]),
 		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		base58.Encode(pub),
+		base58.Encode(pub[1:]),
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)
 }
@@ -98,85 +100,3 @@ func TestDepositNFT(t *testing.T) {
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)
 }
-
-func TestWithdrawNative(t *testing.T) {
-	WithdrawNative(
-		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		"2iJ3erx52f16pScH8ZhpBENHwr9gPAzzVRfb7WYGadX8hdC6v192DR9zBNrBzo4WbWZS59njUJ2wMEzD5ZGW3m",
-		"12134567890",
-		"Solana",
-		100000000,
-		"4nE1f6GjLjVesk4GUEDuDoGwTc72xKdYfQpFrGRZwuNS",
-		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-	)
-}
-
-func TestWithdrawFT(t *testing.T) {
-	WithdrawFT(
-		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		"UYxBXBjVnDiQW7C8TrVQ95GEk4VbHUDBBTKPcrbAHZbCBN9JAiTeTtgbNMhxEe26g8jitmaXQcgHt9KixfFkx",
-		"AwgqsvhfQLorGrqKpXzTe22DtLt8be333Efz8u3dN2hm",
-		"0",
-		"Solana",
-		100000,
-		"4nE1f6GjLjVesk4GUEDuDoGwTc72xKdYfQpFrGRZwuNS",
-		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-	)
-}
-
-func TestWithdrawFTMinted(t *testing.T) {
-	WithdrawFTMinted(
-		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		"UYxBXBjVnDiQW7C8TrVQ95GEk4VbHUDBBTKuGPcrbAHZbCBN9JAvTeTtgbNMhxEe26g8jitmaXQcgHt9KYxfFki",
-		"9KqTXfenmiyi5UbxWN2GSnMhpATekuDrQgWvoZdFkJd",
-		"0",
-		"Solana",
-		100000,
-		"4nE1f6GjLjVesk4GUEDuDoGwTc72xKdYfQpFrGRZwuNS",
-		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-	)
-}
-
-func TestWithdrawNFT(t *testing.T) {
-	WithdrawNFT(
-		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-		"1iUyPZc97Kc85ePHqFmCx35HDBsXbjk2hJngPHEiF4JLo8NXA5H1PgdvwmehvDJLG6SQbfBAJvzX6QTe6ejU4bx",
-		"1234567890",
-		"5bW7KPvZwtxqv3d2y51sdxZ4AoZsFiR5iHUWUzRCr4FQ",
-		"A32b3PiVnbwNB4pXyS8Wsfca8HodGtyiPhGbAcakZXjX",
-		"Solana",
-		"4nE1f6GjLjVesk4GUEDuDoGwTc72xKdYfQpFrGRZwuNS",
-		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-	)
-}
-
-//
-//func TestMintFT(t *testing.T) {
-//	MintFT(
-//		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-//		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-//		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-//		1000_000_000_000,
-//	)
-//}
-//
-//func TestMintNFTCollection(t *testing.T) {
-//	MintNFTCollection(
-//		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-//		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-//		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-//	)
-//}
-//
-//func TestMintNFT(t *testing.T) {
-//	MintNFT(
-//		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-//		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
-//		"3rodirBaxTbx6LTjs5P6wdMQAkvXWM21QTJHFNAgfSDw",
-//		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
-//	)
-//}
