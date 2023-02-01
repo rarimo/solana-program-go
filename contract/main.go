@@ -130,6 +130,7 @@ const (
 	WithdrawNFTOwnerAssocIndex
 	WithdrawNFTBridgeAssocIndex
 	WithdrawNFTWithdrawIndex
+	WithdrawNFTCollectionMetadataIndex = 12
 )
 
 type SignedMetadata struct {
@@ -395,6 +396,51 @@ func WithdrawNFTInstruction(programId, bridgeAdmin, mint, owner, withdraw solana
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
+
+	data, err := borsh.Serialize(args)
+	if err != nil {
+		return nil, err
+	}
+
+	return solana.NewInstruction(
+		programId,
+		accounts,
+		data,
+	), nil
+}
+
+func WithdrawNFTCollectionInstruction(programId, bridgeAdmin, mint, owner, withdraw, collection solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
+	args.Instruction = InstructionWithdrawNFT
+
+	bridgeAssoc, _, err := solana.FindAssociatedTokenAddress(bridgeAdmin, mint)
+	if err != nil {
+		return nil, err
+	}
+
+	ownerAssoc, _, err := solana.FindAssociatedTokenAddress(owner, mint)
+	if err != nil {
+		return nil, err
+	}
+
+	metadata, _, err := solana.FindTokenMetadataAddress(mint)
+	if err != nil {
+		return nil, err
+	}
+
+	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 11))
+	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
+	accounts.Append(solana.NewAccountMeta(mint, true, false))
+	accounts.Append(solana.NewAccountMeta(metadata, true, false))
+	accounts.Append(solana.NewAccountMeta(owner, true, true))
+	accounts.Append(solana.NewAccountMeta(ownerAssoc, true, false))
+	accounts.Append(solana.NewAccountMeta(bridgeAssoc, true, false))
+	accounts.Append(solana.NewAccountMeta(withdraw, true, false))
+	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.TokenMetadataProgramID, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
+	accounts.Append(solana.NewAccountMeta(collection, false, false))
 
 	data, err := borsh.Serialize(args)
 	if err != nil {
