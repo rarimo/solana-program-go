@@ -5,7 +5,7 @@ import (
 
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	"gitlab.com/rarimo/solana-program-go/contract"
+	"gitlab.com/rarimo/solana-program-go/contract/bridge"
 )
 
 func InitBridgeAdmin(adminSeed, program, key string, payerPrivateKey string) {
@@ -27,7 +27,7 @@ func InitBridgeAdmin(adminSeed, program, key string, payerPrivateKey string) {
 		panic(err)
 	}
 
-	instruction, err := contract.InitializeAdminInstruction(programId, bridgeAdmin, payer.PublicKey(), contract.InitializeAdminArgs{
+	instruction, err := bridge.InitializeAdminInstruction(programId, bridgeAdmin, payer.PublicKey(), bridge.InitializeAdminArgs{
 		Instruction: 0,
 		PublicKey:   pubkey,
 		Seeds:       seed,

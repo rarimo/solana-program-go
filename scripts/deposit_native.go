@@ -6,12 +6,12 @@ import (
 
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	"gitlab.com/rarimo/solana-program-go/contract"
+	"gitlab.com/rarimo/solana-program-go/contract/bridge"
 )
 
 func DepositNative(adminSeed, program, receiver, network string, amount uint64, ownerPrivateKey string) {
 	seed := getSeedFromString(adminSeed)
-	args := contract.DepositNativeArgs{
+	args := bridge.DepositNativeArgs{
 		Amount:          amount,
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
@@ -33,7 +33,7 @@ func DepositNative(adminSeed, program, receiver, network string, amount uint64, 
 		panic(err)
 	}
 
-	instruction, err := contract.DepositNativeInstruction(programId, bridgeAdmin, owner.PublicKey(), args)
+	instruction, err := bridge.DepositNativeInstruction(programId, bridgeAdmin, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}
