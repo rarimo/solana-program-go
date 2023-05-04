@@ -3,7 +3,7 @@ package commission
 import (
 	"github.com/near/borsh-go"
 	"github.com/olegfomenko/solana-go"
-	"gitlab.com/rarimo/solana-program-go/contract/bridge"
+	"gitlab.com/rarimo/solana-program-go/contracts/bridge"
 )
 
 type Instruction borsh.Enum

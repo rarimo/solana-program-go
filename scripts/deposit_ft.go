@@ -5,7 +5,7 @@ import (
 
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	"gitlab.com/rarimo/solana-program-go/contract/bridge"
+	"gitlab.com/rarimo/solana-program-go/contracts/bridge"
 )
 
 func DepositFT(adminSeed, program, token, receiver, network string, amount uint64, ownerPrivateKey string) {
