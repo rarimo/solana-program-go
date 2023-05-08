@@ -31,7 +31,7 @@ func TestInitBridgeAdmin(t *testing.T) {
 }
 
 func TestInitCommissionAdmin(t *testing.T) {
-	bridgeAdmin, _ := getBridgeAdmin(getSeedFromString("DiqNmFspSvCrfLgZBWB7z8zvVTQr5xTASWtkbWofyVAc"), solana.MustPublicKeyFromBase58("DENUHfQksvSuy6eB9J8oCrLpBiU3uzar1ruTJYUehZ4n"))
+	bridgeAdmin, _ := GetBridgeAdmin(Get32ByteFromString("DiqNmFspSvCrfLgZBWB7z8zvVTQr5xTASWtkbWofyVAc"), solana.MustPublicKeyFromBase58("DENUHfQksvSuy6eB9J8oCrLpBiU3uzar1ruTJYUehZ4n"))
 
 	InitCommissionAdmin(
 		"9bBGSSJ68LRPQ2dLGEczip7NCo2Xc6LgLrkmowqZwfLi",

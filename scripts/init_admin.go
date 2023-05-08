@@ -15,16 +15,16 @@ func InitBridgeAdmin(adminSeed, program, key string, payerPrivateKey, commission
 		panic(err)
 	}
 
-	seed := getSeedFromString(adminSeed)
-	pubkey := getPubkeyFromString(key)
-	comissionProgram := getSeedFromString(commission)
+	seed := Get32ByteFromString(adminSeed)
+	pubkey := Get64ByteFromString(key)
+	comissionProgram := Get32ByteFromString(commission)
 
 	payer, err := solana.PrivateKeyFromBase58(payerPrivateKey)
 	if err != nil {
 		panic(err)
 	}
 
-	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	bridgeAdmin, err := GetBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}
@@ -84,7 +84,7 @@ func InitCommissionAdmin(program, admin, payerPrivateKey string) {
 		panic(err)
 	}
 
-	commissionAdmin, err := getCommissionAdmin(bridgeAdmin, programId)
+	commissionAdmin, err := GetCommissionAdmin(bridgeAdmin, programId)
 	if err != nil {
 		panic(err)
 	}

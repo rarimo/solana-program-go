@@ -24,9 +24,9 @@ func GenSeed(bridge, commission string) (solana.PublicKey, [32]byte) {
 			panic(err)
 		}
 
-		key, err := getBridgeAdmin(seed, bridgeId)
+		key, err := GetBridgeAdmin(seed, bridgeId)
 		if err == nil {
-			key, err := getCommissionAdmin(key, commissionId)
+			key, err := GetCommissionAdmin(key, commissionId)
 			if err == nil {
 				return key, seed
 			}

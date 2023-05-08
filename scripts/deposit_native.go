@@ -10,7 +10,7 @@ import (
 )
 
 func DepositNative(adminSeed, program, receiver, network string, amount uint64, ownerPrivateKey string) {
-	seed := getSeedFromString(adminSeed)
+	seed := Get32ByteFromString(adminSeed)
 	args := bridge.DepositNativeArgs{
 		Amount:          amount,
 		NetworkTo:       network,
@@ -28,7 +28,7 @@ func DepositNative(adminSeed, program, receiver, network string, amount uint64, 
 		panic(err)
 	}
 
-	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	bridgeAdmin, err := GetBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}

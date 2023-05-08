@@ -9,7 +9,7 @@ import (
 )
 
 func DepositNFT(adminSeed, program, token, receiver, network string, ownerPrivateKey string) {
-	seed := getSeedFromString(adminSeed)
+	seed := Get32ByteFromString(adminSeed)
 
 	args := bridge.DepositNFTArgs{
 		NetworkTo:       network,
@@ -32,7 +32,7 @@ func DepositNFT(adminSeed, program, token, receiver, network string, ownerPrivat
 		panic(err)
 	}
 
-	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	bridgeAdmin, err := GetBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}
