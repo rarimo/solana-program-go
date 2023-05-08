@@ -9,6 +9,10 @@ func getBridgeAdmin(seed [32]byte, programId solana.PublicKey) (solana.PublicKey
 	return solana.CreateProgramAddress([][]byte{seed[:]}, programId)
 }
 
+func getCommissionAdmin(bridgeAdmin, programId solana.PublicKey) (solana.PublicKey, error) {
+	return solana.CreateProgramAddress([][]byte{[]byte("commission_admin"), bridgeAdmin.Bytes()}, programId)
+}
+
 func getSeedFromString(adminSeed string) [32]byte {
 	decoded, err := base58.Decode(adminSeed)
 	if err != nil {

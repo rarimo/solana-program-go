@@ -6,8 +6,13 @@ import (
 	"github.com/olegfomenko/solana-go"
 )
 
-func GenSeed(key string) (solana.PublicKey, [32]byte) {
-	programId, err := solana.PublicKeyFromBase58(key)
+func GenSeed(bridge, commission string) (solana.PublicKey, [32]byte) {
+	bridgeId, err := solana.PublicKeyFromBase58(bridge)
+	if err != nil {
+		panic(err)
+	}
+
+	commissionId, err := solana.PublicKeyFromBase58(commission)
 	if err != nil {
 		panic(err)
 	}
@@ -19,9 +24,12 @@ func GenSeed(key string) (solana.PublicKey, [32]byte) {
 			panic(err)
 		}
 
-		key, err := getBridgeAdmin(seed, programId)
+		key, err := getBridgeAdmin(seed, bridgeId)
 		if err == nil {
-			return key, seed
+			key, err := getCommissionAdmin(key, commissionId)
+			if err == nil {
+				return key, seed
+			}
 		}
 	}
 }
