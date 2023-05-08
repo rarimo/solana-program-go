@@ -207,6 +207,7 @@ func DepositNativeInstruction(programId, bridgeAdmin, owner solana.PublicKey, ar
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.SysVarInstructionsPubkey, false, false))
 
 	data, err := borsh.Serialize(args)
 	if err != nil {
@@ -244,6 +245,7 @@ func DepositFTInstruction(programId, bridgeAdmin, mint, owner solana.PublicKey, 
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.SysVarInstructionsPubkey, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
 
 	data, err := borsh.Serialize(args)
@@ -282,6 +284,7 @@ func DepositNFTInstruction(programId, bridgeAdmin, mint, owner solana.PublicKey,
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.SysVarInstructionsPubkey, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SPLAssociatedTokenAccountProgramID, false, false))
 
 	data, err := borsh.Serialize(args)

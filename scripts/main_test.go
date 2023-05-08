@@ -42,11 +42,12 @@ func TestInitCommissionAdmin(t *testing.T) {
 
 func TestDepositNative(t *testing.T) {
 	DepositNative(
-		"BhBxfhsg2CrckxRKqHJXykLVTSD5LLF8nqNyzXD9idY",
-		"GexDbBi7B2UrJDi9JkrWH9fFVhmysN7u5C9zT2HkC6yZ",
+		"DiqNmFspSvCrfLgZBWB7z8zvVTQr5xTASWtkbWofyVAc",
+		"DENUHfQksvSuy6eB9J8oCrLpBiU3uzar1ruTJYUehZ4n",
+		"9bBGSSJ68LRPQ2dLGEczip7NCo2Xc6LgLrkmowqZwfLi",
 		"0xd30a6d9589a4ad1845f4cfb6cdafa47e2d444fcc568cef04525f1d700f4e53aa",
 		"Solana",
-		10000000,
+		1000,
 		"4kaCgatohjE7RtkqiPW41Q9Y6CSLZft32Z5ubG5rjWgD2qp9gAmXXQTdMLRM6FT2M7Hc6SeCifd3ShkMw1uwyLnm",
 	)
 }

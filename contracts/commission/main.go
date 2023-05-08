@@ -160,11 +160,12 @@ func ChargeCommissionFTInstruction(programId, commissionAdmin, owner, mint solan
 	), nil
 }
 
-func ChargeCommissionNativeInstruction(programId, commissionAdmin, owner solana.PublicKey, args ChargeCommissionArgs) (solana.Instruction, error) {
+func ChargeCommissionNativeInstruction(programId, commissionAdmin, bridgeAdmin, owner solana.PublicKey, args ChargeCommissionArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionChargeCommission
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
+	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
 	accounts.Append(solana.NewAccountMeta(owner, true, true))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
@@ -187,6 +188,7 @@ func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, mana
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
+	accounts.Append(solana.NewAccountMeta(payer, true, true))
 	accounts.Append(solana.NewAccountMeta(management, true, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
@@ -209,6 +211,7 @@ func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, m
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
+	accounts.Append(solana.NewAccountMeta(payer, true, true))
 	accounts.Append(solana.NewAccountMeta(management, true, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
@@ -231,6 +234,7 @@ func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, m
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
+	accounts.Append(solana.NewAccountMeta(payer, true, true))
 	accounts.Append(solana.NewAccountMeta(management, true, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
