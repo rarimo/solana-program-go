@@ -38,9 +38,10 @@ const (
 )
 
 type InitializeAdminArgs struct {
-	Instruction Instruction
-	PublicKey   [64]byte
-	Seeds       [32]byte
+	Instruction       Instruction
+	PublicKey         [64]byte
+	Seeds             [32]byte
+	CommissionProgram [32]byte
 }
 
 const (
