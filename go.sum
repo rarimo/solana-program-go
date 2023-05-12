@@ -26,6 +26,7 @@ contrib.go.opencensus.io/exporter/stackdriver v0.12.6/go.mod h1:8x999/OcIPy5ivx/
 contrib.go.opencensus.io/exporter/stackdriver v0.13.4 h1:ksUxwH3OD5sxkjzEqGxNTl+Xjsmu3BnC/300MhSVTSc=
 contrib.go.opencensus.io/exporter/stackdriver v0.13.4/go.mod h1:aXENhDJ1Y4lIg4EUaVTwzvYETVNZk10Pu26tevFKLUc=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
+filippo.io/edwards25519 v1.0.0-beta.2/go.mod h1:X+pm78QAUPtFLi1z9PYIlS/bdDnvbCOGKtZ+ACWEf7o=
 filippo.io/edwards25519 v1.0.0-rc.1 h1:m0VOOB23frXZvAOK44usCgLWvtsxIoMCTBGJZlpmGfU=
 filippo.io/edwards25519 v1.0.0-rc.1/go.mod h1:N1IkdkCkiLB6tki+MYJoSx2JTY9NUlxZE7eHn5EwJns=
 github.com/AlekSi/pointer v1.1.0 h1:SSDMPcXD9jSl8FPy9cRzoRaMJtm9g9ggGTxecRUbQoI=
@@ -261,6 +262,8 @@ github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI
 github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=
 github.com/olegfomenko/solana-go v1.4.2-0.20220825130821-a1f0ac7c5b0a h1:Ws7if5rXlW7Nc0w0esiTFG2JZLmcB0B9noHR9A2wNyA=
 github.com/olegfomenko/solana-go v1.4.2-0.20220825130821-a1f0ac7c5b0a/go.mod h1:UTSTTiLq4f8/gZ0o/00xcbCRdHpKg1JjGaZUh2WC134=
+github.com/olegfomenko/solana-go v1.4.2-0.20221104112355-eb3546bb0e15 h1:AYe5c0QcEMVhiEUp0Ba+dCoYf9exyczQMcx91LiwClE=
+github.com/olegfomenko/solana-go v1.4.2-0.20221104112355-eb3546bb0e15/go.mod h1:lQf4ND5GWsypR38bHe2elYMGBTkJsYiwasvrhGN5cK0=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.12.1/go.mod h1:zj2OWP4+oCPe1qIXoGWkgMRwljMUYCdkwsT2108oapk=
 github.com/onsi/gomega v1.7.1/go.mod h1:XdKZgCCFLUoM/7CFJVPcG8C1xQ1AJ0vpAezJrB7JYyY=

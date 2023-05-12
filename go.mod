@@ -6,7 +6,7 @@ require (
 	github.com/ethereum/go-ethereum v1.10.26
 	github.com/mr-tron/base58 v1.2.0
 	github.com/near/borsh-go v0.3.1
-	github.com/olegfomenko/solana-go v1.4.2-0.20220825130821-a1f0ac7c5b0a
+	github.com/olegfomenko/solana-go v1.4.2-0.20221104112355-eb3546bb0e15
 	gitlab.com/rarimo/go-merkle v0.0.0-20221212103215-4a9612e1bed1
 	gitlab.com/rarimo/rarimo-core v0.0.0-20221212134410-6f432204ebb5
 )

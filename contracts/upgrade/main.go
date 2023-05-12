@@ -96,14 +96,15 @@ func UpgradeInstruction(programId, upgradeAdmin, program, buffer, spill solana.P
 		return nil, err
 	}
 
-	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 5))
+	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 7))
 	accounts.Append(solana.NewAccountMeta(upgradeAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(programData, true, false))
 	accounts.Append(solana.NewAccountMeta(program, true, false))
 	accounts.Append(solana.NewAccountMeta(buffer, true, false))
-	accounts.Append(solana.NewAccountMeta(spill, true, false))
+	accounts.Append(solana.NewAccountMeta(spill, true, true))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarClockPubkey, false, false))
+	accounts.Append(solana.NewAccountMeta(solana.BPFLoaderUpgradeableProgramID, false, false))
 
 	data, err := borsh.Serialize(args)
 	if err != nil {
