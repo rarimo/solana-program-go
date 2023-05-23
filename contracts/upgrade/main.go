@@ -47,6 +47,7 @@ type UpgradeArgs struct {
 	Instruction Instruction
 	Signature   [64]byte
 	RecoveryId  byte
+	Path        [][32]byte
 }
 
 func InitializeAdminInstruction(programId, upgradeAdmin, feePayer solana.PublicKey, args InitializeAdminArgs) (solana.Instruction, error) {
