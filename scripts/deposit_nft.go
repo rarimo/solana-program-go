@@ -5,13 +5,13 @@ import (
 
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	"gitlab.com/rarimo/solana-program-go/contract"
+	"gitlab.com/rarimo/solana-program-go/contracts/bridge"
 )
 
 func DepositNFT(adminSeed, program, token, receiver, network string, ownerPrivateKey string) {
-	seed := getSeedFromString(adminSeed)
+	seed := Get32ByteFromString(adminSeed)
 
-	args := contract.DepositNFTArgs{
+	args := bridge.DepositNFTArgs{
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
 		Seeds:           seed,
@@ -32,12 +32,12 @@ func DepositNFT(adminSeed, program, token, receiver, network string, ownerPrivat
 		panic(err)
 	}
 
-	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	bridgeAdmin, err := GetBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}
 
-	instruction, err := contract.DepositNFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
+	instruction, err := bridge.DepositNFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}

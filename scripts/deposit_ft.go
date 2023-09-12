@@ -5,13 +5,13 @@ import (
 
 	"github.com/olegfomenko/solana-go"
 	"github.com/olegfomenko/solana-go/rpc"
-	"gitlab.com/rarimo/solana-program-go/contract"
+	"gitlab.com/rarimo/solana-program-go/contracts/bridge"
 )
 
 func DepositFT(adminSeed, program, token, receiver, network string, amount uint64, ownerPrivateKey string) {
-	seed := getSeedFromString(adminSeed)
+	seed := Get32ByteFromString(adminSeed)
 
-	args := contract.DepositFTArgs{
+	args := bridge.DepositFTArgs{
 		Amount:          amount,
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
@@ -33,12 +33,12 @@ func DepositFT(adminSeed, program, token, receiver, network string, amount uint6
 		panic(err)
 	}
 
-	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	bridgeAdmin, err := GetBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}
 
-	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
+	instruction, err := bridge.DepositFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}
@@ -73,7 +73,7 @@ func DepositFT(adminSeed, program, token, receiver, network string, amount uint6
 }
 
 func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, amount uint64, ownerPrivateKey string) {
-	seed := getSeedFromString(adminSeed)
+	seed := Get32ByteFromString(adminSeed)
 	owner, err := solana.PrivateKeyFromBase58(ownerPrivateKey)
 	if err != nil {
 		panic(err)
@@ -84,14 +84,14 @@ func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, am
 		panic(err)
 	}
 
-	token := getSeedFromString(tokenSeed)
+	token := Get32ByteFromString(tokenSeed)
 
 	mint, _, err := solana.FindProgramAddress([][]byte{token[:]}, programId)
 	if err != nil {
 		panic(err)
 	}
 
-	args := contract.DepositFTArgs{
+	args := bridge.DepositFTArgs{
 		Amount:          amount,
 		NetworkTo:       network,
 		ReceiverAddress: receiver,
@@ -99,12 +99,12 @@ func DepositFTBurned(adminSeed, program, tokenSeed, receiver, network string, am
 		TokenSeed:       &token,
 	}
 
-	bridgeAdmin, err := getBridgeAdmin(seed, programId)
+	bridgeAdmin, err := GetBridgeAdmin(seed, programId)
 	if err != nil {
 		panic(err)
 	}
 
-	instruction, err := contract.DepositFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
+	instruction, err := bridge.DepositFTInstruction(programId, bridgeAdmin, mint, owner.PublicKey(), args)
 	if err != nil {
 		panic(err)
 	}
