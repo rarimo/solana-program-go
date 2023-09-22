@@ -182,16 +182,12 @@ func ChargeCommissionNativeInstruction(programId, commissionAdmin, bridgeAdmin, 
 	), nil
 }
 
-func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, management solana.PublicKey, args FeeTokenArgs) (solana.Instruction, error) {
+func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTokenArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionAddFeeToken
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(payer, true, true))
-	accounts.Append(solana.NewAccountMeta(management, true, false))
-	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 
 	data, err := borsh.Serialize(args)
 	if err != nil {
@@ -205,16 +201,12 @@ func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, mana
 	), nil
 }
 
-func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, management solana.PublicKey, args FeeTokenArgs) (solana.Instruction, error) {
+func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTokenArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionRemoveFeeToken
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(payer, true, true))
-	accounts.Append(solana.NewAccountMeta(management, true, false))
-	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 
 	data, err := borsh.Serialize(args)
 	if err != nil {
@@ -228,16 +220,12 @@ func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, m
 	), nil
 }
 
-func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, management solana.PublicKey, args FeeTokenArgs) (solana.Instruction, error) {
+func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTokenArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionUpdateFeeToken
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
-	accounts.Append(solana.NewAccountMeta(payer, true, true))
-	accounts.Append(solana.NewAccountMeta(management, true, false))
-	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
-	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 
 	data, err := borsh.Serialize(args)
 	if err != nil {
@@ -251,14 +239,13 @@ func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, payer, m
 	), nil
 }
 
-func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver, management solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
+func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver, args WithdrawArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionWithdraw
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
 	accounts.Append(solana.NewAccountMeta(receiver, true, true))
-	accounts.Append(solana.NewAccountMeta(management, true, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 
