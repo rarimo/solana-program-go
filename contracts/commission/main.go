@@ -238,7 +238,7 @@ func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin solana.Pu
 	), nil
 }
 
-func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver, solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
+func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionWithdraw
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
