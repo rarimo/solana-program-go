@@ -73,7 +73,6 @@ const (
 
 type FeeTokenArgs struct {
 	Instruction Instruction
-	Origin      [32]byte
 	Signature   [64]byte
 	RecoveryId  byte
 	Path        [][32]byte
