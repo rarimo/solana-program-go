@@ -182,7 +182,7 @@ func ChargeCommissionNativeInstruction(programId, commissionAdmin, bridgeAdmin, 
 	), nil
 }
 
-func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTokenArgs) (solana.Instruction, error) {
+func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin solana.PublicKey, args FeeTokenArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionAddFeeToken
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
@@ -201,7 +201,7 @@ func AddFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTok
 	), nil
 }
 
-func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTokenArgs) (solana.Instruction, error) {
+func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin solana.PublicKey, args FeeTokenArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionRemoveFeeToken
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
@@ -220,7 +220,7 @@ func RemoveFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args Fee
 	), nil
 }
 
-func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args FeeTokenArgs) (solana.Instruction, error) {
+func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin solana.PublicKey, args FeeTokenArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionUpdateFeeToken
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
@@ -239,7 +239,7 @@ func UpdateFeeTokenInstruction(programId, commissionAdmin, bridgeAdmin, args Fee
 	), nil
 }
 
-func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver, args WithdrawArgs) (solana.Instruction, error) {
+func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver, solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionWithdraw
 
 	accounts := solana.AccountMetaSlice(make([]*solana.AccountMeta, 0, 4))
@@ -261,7 +261,7 @@ func WithdrawNativeInstruction(programId, commissionAdmin, bridgeAdmin, receiver
 	), nil
 }
 
-func WithdrawFTInstruction(programId, commissionAdmin, bridgeAdmin, receiver, management, mint solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
+func WithdrawFTInstruction(programId, commissionAdmin, bridgeAdmin, receiver, mint solana.PublicKey, args WithdrawArgs) (solana.Instruction, error) {
 	args.Instruction = InstructionWithdraw
 
 	adminAssoc, _, err := solana.FindAssociatedTokenAddress(commissionAdmin, mint)
@@ -278,7 +278,6 @@ func WithdrawFTInstruction(programId, commissionAdmin, bridgeAdmin, receiver, ma
 	accounts.Append(solana.NewAccountMeta(commissionAdmin, true, false))
 	accounts.Append(solana.NewAccountMeta(bridgeAdmin, false, false))
 	accounts.Append(solana.NewAccountMeta(receiver, true, true))
-	accounts.Append(solana.NewAccountMeta(management, true, false))
 	accounts.Append(solana.NewAccountMeta(solana.SystemProgramID, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.SysVarRentPubkey, false, false))
 	accounts.Append(solana.NewAccountMeta(solana.TokenProgramID, false, false))
