@@ -25,9 +25,6 @@ type TokenType borsh.Enum
 
 const (
 	Native TokenType = iota
-	ERC20
-	ERC721
-	ERC1155
 	MetaplexFT
 	MetaplexNFT
 )
