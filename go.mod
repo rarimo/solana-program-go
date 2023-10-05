@@ -1,4 +1,4 @@
-module gitlab.com/rarimo/solana-program-go
+module github.com/rarimo/solana-program-go
 
 go 1.18
 
